@@ -1,51 +1,73 @@
 def welcome
-  puts 'Bem-vindo ao jogo de adivinhação'
-  puts 'Qual é o seu nome?'
-  player = gets.strip
-
-  puts "\n\n"
-  puts "O Jogo irá iniciar, #{player}"
+  puts "\nBem-vindo ao jogo de adivinhação"
+  puts "\nQual é o seu nome?"
+  gets.strip
 end
 
-def choosing_a_random_number
-  puts 'Escolhendo um numero secreto de 0 e 200...'
-  175
+def start_game_message(player)
+  puts "\nO Jogo irá iniciar, #{player}"
+end
+
+def asking_for_level
+  puts 'Qual a dificuldade do jogo? (1 fácil.. 5 dificil)'
+  gets.to_i
+end
+
+def choosing_a_random_number(level)
+  max = case level
+        when 1
+          10
+        when 2
+          60
+        when 3
+          100
+        when 4
+          150
+        else
+          200
+        end
+  puts "\nEscolhendo um numero secreto de 1 e #{max}..."
+  rand(max)
 end
 
 def select_a_number
-  puts "\n\n"
-  puts 'Escolha um numero:'
+  puts "\nEscolha um numero:"
   gets.strip
 end
 
 def asking_for_a_number(kicks, limit_of_tries, tries)
-  puts "Tentativa #{tries} de #{limit_of_tries}"
-  puts "Chutes até agora #{kicks}"
+  puts "\n\nTentativa #{tries} de #{limit_of_tries}"
+  puts "\nChutes até agora #{kicks}"
   kick = select_a_number
-  puts "Será que acertou? Você chutou #{kick}"
+  puts "\nSerá que acertou? Você chutou #{kick}"
   kick.to_i
 end
 
 def check_if_is_right(secret_number, kick)
   that_is_right = secret_number == kick
   if that_is_right
-    puts 'acertou!!!'
+    puts "\nacertou!!!"
     return true
   end
   is_greater = secret_number > kick
 
   if is_greater
-    puts 'O numero é maior!'
+    puts "\nO numero é maior!"
   else
-    puts 'O numero é menor!'
+    puts "\nO numero é menor!"
   end
+  puts "\nAperte alguma tecla para continuar:"
+  gets
   false
 end
 
 def main
-  welcome
-  secret_number = choosing_a_random_number
+  player = welcome
+  start_game_message player
+  level = asking_for_level
+  secret_number = choosing_a_random_number level
 
+  points = 1000
   kicks = []
   limit_of_tries = 3
 
@@ -53,8 +75,11 @@ def main
     kick = asking_for_a_number kicks, limit_of_tries, tries
     kicks << kick
 
+    points_sor_far = (kick - secret_number).abs / 2.0
+    points -= points_sor_far
     break if check_if_is_right secret_number, kick
   end
+  puts "Você conquistou #{points} pontos."
 end
 
 main
