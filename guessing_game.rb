@@ -27,7 +27,7 @@ def choosing_a_random_number(level)
           200
         end
   puts "\nEscolhendo um numero secreto de 1 e #{max}..."
-  rand(max)
+  rand(max) + 1
 end
 
 def select_a_number
@@ -61,10 +61,7 @@ def check_if_is_right(secret_number, kick)
   false
 end
 
-def main
-  player = welcome
-  start_game_message player
-  level = asking_for_level
+def play(level)
   secret_number = choosing_a_random_number level
 
   points = 1000
@@ -80,6 +77,23 @@ def main
     break if check_if_is_right secret_number, kick
   end
   puts "Você conquistou #{points} pontos."
+end
+
+def dont_you_want_to_play?
+  puts "\n\nVocê quer continuar jogando? (S/N)"
+  decision = gets.strip
+  decision.upcase == 'N'
+end
+
+def main
+  player = welcome
+  start_game_message player
+  level = asking_for_level
+
+  loop do
+    play level
+    break if dont_you_want_to_play?
+  end
 end
 
 main
