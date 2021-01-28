@@ -69,4 +69,5 @@ def play
     end
   end
   you_won points_sor_far
+  points_sor_far
 end

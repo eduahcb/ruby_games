@@ -3,6 +3,7 @@ def welcome
   puts "\nQual é o seu nome?"
   name = gets.strip
   puts "\nComeçaremos o jogo para você, #{name}!"
+  name
 end
 
 def show_choosing_a_secret_word_message
@@ -56,3 +57,10 @@ def dont_you_want_to_play?
   decision.upcase == 'N'
 end
 
+def show_total_points(points)
+  puts "\nVocê consquistou um total de #{points} pontos."
+end
+
+def show_last_champion(info)
+  puts "\nO campeao atual é #{info[0]}"
+end
